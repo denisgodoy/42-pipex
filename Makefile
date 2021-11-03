@@ -11,7 +11,6 @@ SRC := main.c \
 		ft_free_arr.c \
 		$(addprefix utils/, \
 		ft_strdup.c \
-		ft_strjoin_free.c \
 		ft_strlcpy.c \
 		ft_strlen.c)
 
