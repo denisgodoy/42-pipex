@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 12:32:49 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/03 15:43:18 by degabrie         ###   ########.fr       */
+/*   Created: 2021/11/03 15:45:25 by degabrie          #+#    #+#             */
+/*   Updated: 2021/11/03 15:45:51 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
-int	main(int argc, char **argv)
+char	*ft_strdup(const char *s1)
 {
-	t_pipex	pipex;
-	int		fd1;
-	int		fd2;
+	char	*ptr;
+	size_t	size;
 
-	ft_check_args(&pipex, argc, argv);
-	fd1 = open(pipex.infile, O_RDONLY);
-	fd2 = open(pipex.outfile, O_CREAT);
-	printf("%s\n%s\n", pipex.infile, pipex.outfile);
-	return (0);
+	size = ft_strlen(s1) + 1;
+	ptr = (char *)malloc(size * sizeof(char));
+	if (!ptr)
+		return (0);
+	ft_strlcpy(ptr, s1, size);
+	return (ptr);
 }

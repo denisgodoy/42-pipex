@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_check_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 12:32:49 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/03 15:43:18 by degabrie         ###   ########.fr       */
+/*   Created: 2021/11/03 15:42:45 by degabrie          #+#    #+#             */
+/*   Updated: 2021/11/03 15:48:17 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
-int	main(int argc, char **argv)
+void	ft_check_args(t_pipex *pipex, int argc, char **argv)
 {
-	t_pipex	pipex;
-	int		fd1;
-	int		fd2;
+	int		i;
+	char	*cmd_str;
 
-	ft_check_args(&pipex, argc, argv);
-	fd1 = open(pipex.infile, O_RDONLY);
-	fd2 = open(pipex.outfile, O_CREAT);
-	printf("%s\n%s\n", pipex.infile, pipex.outfile);
-	return (0);
+	if (argc < 5)
+	{
+		write(1, "Invalid number of arguments.\n", 29);
+		exit(EXIT_FAILURE);
+	}
+	pipex->infile = argv[1];
+	pipex->outfile = argv[argc - 1];
+	cmd_str = ft_strdup("");
+	i = 2;
+	while (i < argc - 1)
+	{
+		cmd_str = ft_strjoin_free(cmd_str, argv[i]);
+		i++;
+	}
+	printf("%s\n", cmd_str);
+	free(cmd_str);
+	return ;
 }

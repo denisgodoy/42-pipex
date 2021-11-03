@@ -2,11 +2,17 @@ NAME := pipex
 
 CC := clang
 
-CFLAGS := -Wall -Wextra -Werror -g
+CFLAGS := -Wall -Wextra -Werror -I includes/ -g
 
-HEADERS := pipex.h
+HEADERS := includes/pipex.h
 
-SRC := main.c utils.c
+SRC := main.c \
+		ft_check_args.c \
+		$(addprefix utils/, \
+		ft_strdup.c \
+		ft_strjoin_free.c \
+		ft_strlcpy.c \
+		ft_strlen.c)
 
 OBJ := $(SRC:%.c=%.o)
 

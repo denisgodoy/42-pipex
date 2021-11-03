@@ -1,44 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 13:18:37 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/03 13:31:38 by degabrie         ###   ########.fr       */
+/*   Created: 2021/11/03 15:45:06 by degabrie          #+#    #+#             */
+/*   Updated: 2021/11/03 15:45:19 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	if (dstsize > 0)
-	{
-		while (i < dstsize - 1 && src[i] != '\0')
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-		return (ft_strlen(src));
-	}
-	return (ft_strlen(src));
-}
 
 char	*ft_strjoin_free(char *s1, char const *s2)
 {
@@ -63,18 +35,5 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 	}
 	ptr[len + i] = '\0';
 	free(s1);
-	return (ptr);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*ptr;
-	size_t	size;
-
-	size = ft_strlen(s1) + 1;
-	ptr = (char *)malloc(size * sizeof(char));
-	if (!ptr)
-		return (0);
-	ft_strlcpy(ptr, s1, size);
 	return (ptr);
 }
