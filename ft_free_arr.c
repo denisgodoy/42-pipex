@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_free_arr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 12:32:49 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/03 19:03:25 by degabrie         ###   ########.fr       */
+/*   Created: 2021/11/03 18:53:08 by degabrie          #+#    #+#             */
+/*   Updated: 2021/11/03 18:55:04 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
-int	main(int argc, char **argv)
+void	ft_free_arr(t_pipex *pipex)
 {
-	t_pipex	pipex;
-	int		fd1;
-	int		fd2;
+	int	i;
 
-	ft_check_args(&pipex, argc, argv);
-	fd1 = open(pipex.infile, O_RDONLY);
-	if (fd1 < 0)
-	{
-		ft_free_arr(&pipex);
-		return (0);
-	}
-	close(fd1);
-	fd2 = open(pipex.outfile, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-	write(fd2, pipex.cmd[0], ft_strlen(pipex.cmd[0]));
-	close(fd2);
-	ft_free_arr(&pipex);
-	return (0);
+	i = 0;
+	while (pipex->cmd[i])
+		free(pipex->cmd[i++]);
+	free(pipex->cmd);
+	return ;
 }
