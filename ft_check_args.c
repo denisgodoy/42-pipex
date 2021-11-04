@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:42:45 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/04 05:00:40 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/04 01:41:31 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	ft_check_args(t_pipex *pipex, int argc, char **argv, char **envp)
 		exit(EXIT_FAILURE);
 	pipex->cmd = (char **)malloc((argc - 2) * sizeof(char *));
 	if (!pipex->cmd)
+	{
+		ft_free_path(pipex);
 		exit(EXIT_FAILURE);
+	}
 	i = 0;
 	j = 2;
 	while (j < argc - 1)
