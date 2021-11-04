@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 12:32:49 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/04 05:05:38 by degabrie         ###   ########.fr       */
+/*   Created: 2021/11/04 04:21:34 by degabrie          #+#    #+#             */
+/*   Updated: 2021/11/04 04:56:40 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	t_pipex	pipex;
-	int		fd1;
-	int		fd2;
+	char	*ptr;
+	size_t	strlen;
 
-	ft_check_args(&pipex, argc, argv, envp);
-	fd1 = open(pipex.infile, O_RDONLY);
-	fd2 = open(pipex.outfile, O_CREAT | O_RDWR | O_TRUNC, 0666);
-	if (fd1 < 0 || fd2 < 0)
+	if (!s)
+		return (0);
+	strlen = ft_strlen(s);
+	if (start > strlen)
 	{
-		ft_free_cmd(&pipex);
-		ft_free_path(&pipex);
-		return (-1);
+		len = 0;
+		start = strlen;
 	}
-	ft_free_cmd(&pipex);
-	ft_free_path(&pipex);
-	return (0);
+	else if (start + len > strlen)
+		len = strlen - start;
+	ptr = (char *)malloc(len + 1 * sizeof(char));
+	if (!ptr)
+		return (0);
+	ft_strlcpy(ptr, s + start, len + 1);
+	return (ptr);
 }

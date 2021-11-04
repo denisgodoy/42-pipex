@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 12:32:49 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/04 05:05:38 by degabrie         ###   ########.fr       */
+/*   Created: 2021/11/04 04:13:54 by degabrie          #+#    #+#             */
+/*   Updated: 2021/11/04 04:14:09 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	t_pipex	pipex;
-	int		fd1;
-	int		fd2;
+	size_t	i;
+	char	*str1;
+	char	*str2;
 
-	ft_check_args(&pipex, argc, argv, envp);
-	fd1 = open(pipex.infile, O_RDONLY);
-	fd2 = open(pipex.outfile, O_CREAT | O_RDWR | O_TRUNC, 0666);
-	if (fd1 < 0 || fd2 < 0)
+	str1 = (char *)s1;
+	str2 = (char *)s2;
+	i = 0;
+	if (!n)
+		return (0);
+	while (i < (n - 1) && str1 && str2)
 	{
-		ft_free_cmd(&pipex);
-		ft_free_path(&pipex);
-		return (-1);
+		if (str1[i] != str2[i])
+			break ;
+		i++;
 	}
-	ft_free_cmd(&pipex);
-	ft_free_path(&pipex);
-	return (0);
+	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
 }

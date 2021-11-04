@@ -12,7 +12,10 @@ SRC := main.c \
 		$(addprefix utils/, \
 		ft_strdup.c \
 		ft_strlcpy.c \
-		ft_strlen.c)
+		ft_strlen.c \
+		ft_memcmp.c \
+		ft_split.c \
+		ft_substr.c)
 
 OBJ := $(SRC:%.c=%.o)
 

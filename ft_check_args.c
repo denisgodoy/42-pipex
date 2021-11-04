@@ -6,24 +6,28 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:42:45 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/03 19:18:01 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/04 05:00:40 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
-void	ft_check_args(t_pipex *pipex, int argc, char **argv)
-{
-	int		i;
-	int		j;
+static int	ft_check_envp(t_pipex *pipex, char **envp);
 
-	if (argc < 5)
+void	ft_check_args(t_pipex *pipex, int argc, char **argv, char **envp)
+{
+	int	i;
+	int	j;
+
+	if (argc != 5)
 	{
 		write(1, "Invalid number of arguments.\n", 29);
 		exit(EXIT_FAILURE);
 	}
 	pipex->infile = argv[1];
 	pipex->outfile = argv[argc - 1];
+	if (ft_check_envp(pipex, envp) < 0)
+		exit(EXIT_FAILURE);
 	pipex->cmd = (char **)malloc((argc - 2) * sizeof(char *));
 	if (!pipex->cmd)
 		exit(EXIT_FAILURE);
@@ -33,4 +37,26 @@ void	ft_check_args(t_pipex *pipex, int argc, char **argv)
 		pipex->cmd[i++] = ft_strdup(argv[j++]);
 	pipex->cmd[i] = NULL;
 	return ;
+}
+
+static int	ft_check_envp(t_pipex *pipex, char **envp)
+{
+	int		i;
+	int		diff;
+	char	*paths;
+
+	i = 0;
+	while (envp[i])
+	{
+		diff = ft_memcmp(envp[i], "PATH", 4);
+		if (!diff)
+			break ;
+		i++;
+	}
+	if (diff)
+		return (-1);
+	paths = ft_substr(envp[i], 5, ft_strlen(envp[i]));
+	pipex->path = ft_split(paths, ':');
+	free(paths);
+	return (0);
 }
