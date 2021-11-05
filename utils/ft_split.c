@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 04:17:37 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/04 22:07:19 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/04 22:26:47 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,6 @@
 
 static size_t	ft_count_words(char const *s, char c);
 static size_t	ft_substr_len(char const *s, char c);
-
-static void	*ft_memset(void *b, int c, size_t len)
-{
-	unsigned char	*str;
-
-	str = b;
-	while (len--)
-		*(str++) = (unsigned char)c;
-	return (b);
-}
-
-static void	ft_bzero(void *s, size_t n)
-{
-	if (n > 0)
-		ft_memset(s, 0, n);
-}
-
-static void	*ft_calloc(size_t count, size_t size)
-{
-	void	*ptr;
-
-	ptr = malloc(count * size);
-	if (!ptr)
-		return (0);
-	ft_bzero(ptr, count * size);
-	return (ptr);
-}
 
 char	**ft_split(char const *s, char c)
 {
@@ -52,7 +25,7 @@ char	**ft_split(char const *s, char c)
 		return (0);
 	i = 0;
 	j = 0;
-	tab = (char **)ft_calloc(ft_count_words(s, c) + 1, sizeof(char *));
+	tab = (char **)malloc((ft_count_words(s, c) + 1) * sizeof(char *));
 	if (!tab)
 		return (0);
 	while (s[i] != '\0')
@@ -65,6 +38,7 @@ char	**ft_split(char const *s, char c)
 		}
 		i++;
 	}
+	tab[j] = NULL;
 	return (tab);
 }
 

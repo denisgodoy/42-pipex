@@ -10,6 +10,7 @@ SRC := main.c \
 		ft_check_args.c \
 		ft_free_arr.c \
 		ft_pipex.c \
+		ft_cmd_format.c \
 		$(addprefix utils/, \
 		ft_strdup.c \
 		ft_strlcpy.c \

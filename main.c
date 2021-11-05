@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:32:49 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/04 20:38:20 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/04 22:57:00 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_path(&pipex);
 		return (-1);
 	}
+	ft_cmd_format(&pipex);
 	ft_pipex(&pipex, fd1, fd2);
 	ft_free_cmd(&pipex);
 	ft_free_path(&pipex);
