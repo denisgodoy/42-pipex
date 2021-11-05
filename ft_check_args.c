@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:42:45 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/04 01:41:31 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/04 22:06:24 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_check_args(t_pipex *pipex, int argc, char **argv, char **envp)
 	while (j < argc - 1)
 		pipex->cmd[i++] = ft_strdup(argv[j++]);
 	pipex->cmd[i] = NULL;
+	pipex->cmd_len = i;
 	return ;
 }
 
@@ -60,6 +61,12 @@ static int	ft_check_envp(t_pipex *pipex, char **envp)
 		return (-1);
 	paths = ft_substr(envp[i], 5, ft_strlen(envp[i]));
 	pipex->path = ft_split(paths, ':');
+	i = 0;
+	while (pipex->path[i])
+	{
+		pipex->path[i] = ft_strjoin_free(pipex->path[i], "/");
+		i++;
+	}
 	free(paths);
 	return (0);
 }

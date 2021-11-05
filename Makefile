@@ -9,13 +9,15 @@ HEADERS := includes/pipex.h
 SRC := main.c \
 		ft_check_args.c \
 		ft_free_arr.c \
+		ft_pipex.c \
 		$(addprefix utils/, \
 		ft_strdup.c \
 		ft_strlcpy.c \
 		ft_strlen.c \
 		ft_memcmp.c \
 		ft_split.c \
-		ft_substr.c)
+		ft_substr.c \
+		ft_strjoin_free.c)
 
 OBJ := $(SRC:%.c=%.o)
 
