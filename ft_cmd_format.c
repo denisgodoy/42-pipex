@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 22:38:24 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/04 23:53:32 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/05 00:24:06 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	ft_cmd_format(t_pipex *pipex)
 			if (pipex->cmd[i][j] == ' ')
 				break ;
 		pipex->cmd_path[i] = ft_substr(pipex->cmd[i], 0, j);
+		printf("%s\n", pipex->cmd[i]);
+		if (access("/usr/bin/cut", X_OK) < 0)
+		{
+			perror("-bash");
+			exit(EXIT_FAILURE);
+		}
 	}
 	pipex->cmd_path[i] = NULL;
 	return ;
