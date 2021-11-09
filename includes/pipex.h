@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/04 23:58:25 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/08 21:01:45 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,19 @@
 # include <unistd.h>
 # include <stdio.h>
 
+typedef struct s_utils
+{
+	char	**cmd;
+	char	**path;
+	int		cmd_len;
+}	t_utils;
+
 typedef struct s_pipex
 {
 	char	*infile;
 	char	*outfile;
-	char	**path;
 	char	**cmd;
-	char	**cmd_path;
-	int		cmd_len;
+	t_utils	utils;
 }	t_pipex;
 
 void	ft_check_args(t_pipex *pipex, int argc, char **argv, char **envp);
