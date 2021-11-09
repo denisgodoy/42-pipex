@@ -6,13 +6,13 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/04 20:51:48 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/08 21:31:30 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
-void	ft_pipex(t_pipex *pipex, int fd1, int fd2)
+void	ft_pipex(t_pipex *pipex, char **argv, char **envp)
 {
-	printf("fd1: %d\nfd2: %d\noutfile: %s\n", fd1, fd2, pipex->outfile);
+	printf("ag1 %s\nenv2 %s\nout %s\n", argv[2], envp[3], pipex->outfile);
 }

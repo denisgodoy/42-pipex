@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/08 21:01:45 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/08 21:30:41 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_pipex
 	char	*infile;
 	char	*outfile;
 	char	**cmd;
+	int		fd1;
+	int		fd2;
 	t_utils	utils;
 }	t_pipex;
 
@@ -37,7 +39,7 @@ void	ft_cmd_format(t_pipex *pipex);
 void	ft_free_cmd(t_pipex *pipex);
 void	ft_free_path(t_pipex *pipex);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	ft_pipex(t_pipex *pipex, int fd1, int fd2);
+void	ft_pipex(t_pipex *pipex, char **argv, char **envp);
 char	**ft_split(char const *s, char c);
 size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
