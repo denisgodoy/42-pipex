@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 14:44:37 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 16:55:56 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,18 @@ void	ft_pipex(t_pipex *pipex)
 		exit(EXIT_FAILURE);
 	pid1 = fork();
 	if (pid1 < 0)
+	{
+		perror(strerror(ECHILD));
 		exit(EXIT_FAILURE);
+	}
 	else if (!pid1)
 		ft_pipe_process(pipex, child, piped);
 	pid2 = fork();
 	if (pid2 < 0)
+	{
+		perror(strerror(ECHILD));
 		exit(EXIT_FAILURE);
+	}
 	else if (!pid2)
 		ft_pipe_process(pipex, parent, piped);
 	close(piped[0]);
@@ -75,6 +81,6 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 		free(path);
 	}
 	unlink(pipex->outfile);
-	perror("Error");
+	perror(strerror(EINVAL));
 	exit(EXIT_FAILURE);
 }

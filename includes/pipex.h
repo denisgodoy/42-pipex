@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 14:46:03 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 16:52:32 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <string.h>
+
+# define ENOMEM	12
+# define EINVAL	22
+# define EBADF	9
+# define ECHILD	10
 
 enum e_process
 {
