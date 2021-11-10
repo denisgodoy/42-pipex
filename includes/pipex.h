@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/08 21:30:41 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/09 23:07:37 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct s_utils
 {
@@ -39,11 +41,12 @@ void	ft_cmd_format(t_pipex *pipex);
 void	ft_free_cmd(t_pipex *pipex);
 void	ft_free_path(t_pipex *pipex);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	ft_pipex(t_pipex *pipex, char **argv, char **envp);
+void	ft_pipex(t_pipex *pipex, char **envp);
 char	**ft_split(char const *s, char c);
 size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin_free(char *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
