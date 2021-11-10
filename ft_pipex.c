@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 02:52:52 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 03:04:58 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_pipex(t_pipex *pipex)
 	int		piped[2];
 	pid_t	pid1;
 	pid_t	pid2;
-	int		status;
 	
 	if (pipe(piped) < 0)
 		exit(EXIT_FAILURE);
@@ -36,9 +35,8 @@ void	ft_pipex(t_pipex *pipex)
 		ft_pipe_process(pipex, parent, piped);
 	close(piped[0]);
 	close(piped[1]);
-	waitpid(pid1, &status, 0);
-	waitpid(pid2, &status, 0);
-	exit(status);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
 }
 
 static void	ft_pipe_process(t_pipex *pipex, int process, int *piped)
