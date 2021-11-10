@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:42:45 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/09 23:04:49 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 00:58:52 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_check_args(t_pipex *pipex, int argc, char **argv, char **envp)
 	j = 2;
 	while (j < argc - 1)
 		pipex->cmd[++i] = ft_strdup(argv[j++]);
-	pipex->cmd[i] = NULL;
+	pipex->cmd[i + 1] = NULL;
 	pipex->utils.cmd_len = i;
 	return ;
 }

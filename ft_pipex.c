@@ -6,50 +6,63 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/09 23:08:06 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 01:54:12 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
-static int	ft_valid_path(t_pipex *pipex, int arg);
+static char	*ft_exec_cmd(t_pipex *pipex, int arg, char **envp);
 
-void	ft_pipex(t_pipex *pipex, char **envp)
+void	ft_pipex(t_pipex *pipex, char **envp, int fd1, int fd2)
 {
-	int		fd[2];
-	int		pid1;
-	int		i;
-	char	**cmd;
+	int		piped[2];
+	pid_t	pid1;
+	pid_t	pid2;
 
-	if (pipe(fd) == -1)
+	if (pipe(piped) < 0)
 		exit(EXIT_FAILURE);
 	pid1 = fork();
 	if (pid1 < 0)
 		exit(EXIT_FAILURE);
-	i = -1;
-	if (pid1 == 0)
+	if (!pid1)
 	{
-		cmd = ft_split(pipex->cmd[0], ' ');
-		execve(pipex->utils.path[ft_valid_path(pipex, 0)], cmd, envp);
+		dup2(fd1, STDIN_FILENO);
+		dup2(piped[1], STDOUT_FILENO);
+		close(piped[0]);
+		close(fd1);
+		ft_exec_cmd(pipex, 0, envp);
 	}
+	pid2 = fork();
+	if (pid2 < 0)
+		exit(EXIT_FAILURE);
+	if (!pid2)
+	{
+		dup2(fd2, STDOUT_FILENO);
+		dup2(piped[0], STDIN_FILENO);
+		close(piped[1]);
+		close(fd2);
+		ft_exec_cmd(pipex, 1, envp);
+	}
+	close(piped[0]);
+	close(piped[1]);
 	waitpid(pid1, NULL, 0);
-	return ;
+	waitpid(pid2, NULL, 0);
 }
 
-static int	ft_valid_path(t_pipex *pipex, int arg)
+static char	*ft_exec_cmd(t_pipex *pipex, int arg, char **envp)
 {
 	int		i;
 	char	*path;
+	char	**cmd;
 
+	cmd = ft_split(pipex->cmd[1], ' ');
 	i = -1;
 	while (pipex->utils.path[i])
 	{
 		path = ft_strjoin(pipex->utils.path[++i], pipex->utils.cmd[arg]);
-		if (access(path, X_OK) == 0)
-		{
-			free(path);
-			return (i);
-		}
+		if (!access(path, X_OK))
+			execve(path, cmd, envp);
 		free(path);
 	}
 	unlink(pipex->outfile);

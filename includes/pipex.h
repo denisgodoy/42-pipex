@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/09 23:07:37 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 01:43:51 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void	ft_check_args(t_pipex *pipex, int argc, char **argv, char **envp);
 void	ft_cmd_format(t_pipex *pipex);
 void	ft_free_cmd(t_pipex *pipex);
 void	ft_free_path(t_pipex *pipex);
+void	ft_free_utils(t_pipex *pipex);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	ft_pipex(t_pipex *pipex, char **envp);
+void	ft_pipex(t_pipex *pipex, char **envp, int fd1, int fd2);
 char	**ft_split(char const *s, char c);
 size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
