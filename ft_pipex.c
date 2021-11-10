@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 03:04:58 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 14:44:37 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void	ft_pipex(t_pipex *pipex)
 	int		piped[2];
 	pid_t	pid1;
 	pid_t	pid2;
-	
+
 	if (pipe(piped) < 0)
 		exit(EXIT_FAILURE);
 	pid1 = fork();
 	if (pid1 < 0)
 		exit(EXIT_FAILURE);
-	if (!pid1)
+	else if (!pid1)
 		ft_pipe_process(pipex, child, piped);
 	pid2 = fork();
 	if (pid2 < 0)
 		exit(EXIT_FAILURE);
-	if (!pid2)
+	else if (!pid2)
 		ft_pipe_process(pipex, parent, piped);
 	close(piped[0]);
 	close(piped[1]);
@@ -67,9 +67,9 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 
 	cmd = ft_split(pipex->cmd[arg], ' ');
 	i = -1;
-	while (pipex->src.path[i])
+	while (pipex->src.path[++i])
 	{
-		path = ft_strjoin(pipex->src.path[++i], pipex->src.cmd[arg]);
+		path = ft_strjoin(pipex->src.path[i], pipex->src.cmd[arg]);
 		if (!access(path, X_OK))
 			execve(path, cmd, pipex->src.envp);
 		free(path);

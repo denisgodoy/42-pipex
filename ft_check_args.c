@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:42:45 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 02:44:41 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 14:37:17 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,23 @@ void	ft_check_args(t_pipex *pipex, int argc, char **argv)
 static int	ft_check_envp(t_pipex *pipex)
 {
 	int		i;
-	int		diff;
+	size_t	envlen;
 	char	*paths;
 
 	i = -1;
 	while (pipex->src.envp[++i])
 	{
-		diff = ft_memcmp(pipex->src.envp[i], "PATH", 4);
-		if (!diff)
-			break ;
+		envlen = ft_strlen(pipex->src.envp[i]);
+		if (!ft_memcmp(pipex->src.envp[i], "PATH", 4))
+		{
+			paths = ft_substr(pipex->src.envp[i], 5, envlen);
+			pipex->src.path = ft_split(paths, ':');
+			free(paths);
+			i = -1;
+			while (pipex->src.path[++i])
+				pipex->src.path[i] = ft_strjoin_free(pipex->src.path[i], "/");
+			return (0);
+		}
 	}
-	if (diff)
-		return (-1);
-	paths = ft_substr(pipex->src.envp[i], 5, ft_strlen(pipex->src.envp[i]));
-	pipex->src.path = ft_split(paths, ':');
-	i = -1;
-	while (pipex->src.path[++i])
-		pipex->src.path[i] = ft_strjoin_free(pipex->src.path[i], "/");
-	free(paths);
-	return (0);
+	return (-1);
 }

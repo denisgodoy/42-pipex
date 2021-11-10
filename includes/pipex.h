@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 02:36:44 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 14:46:03 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <string.h>
-
-# define EINVAL	22
 
 enum e_process
 {
