@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 22:38:24 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 00:54:40 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 02:21:09 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	ft_cmd_format(t_pipex *pipex)
 	int	i;
 	int	j;
 
-	pipex->utils.cmd = (char **)malloc((pipex->utils.cmd_len + 1) * sizeof(char *));
-	if (!pipex->utils.cmd)
+	pipex->src.cmd = (char **)malloc((pipex->src.cmdlen + 1) * sizeof(char *));
+	if (!pipex->src.cmd)
 	{
 		ft_free_cmd(pipex);
 		ft_free_path(pipex);
@@ -32,8 +32,8 @@ void	ft_cmd_format(t_pipex *pipex)
 		while (pipex->cmd[i][++j])
 			if (pipex->cmd[i][j] == ' ')
 				break ;
-		pipex->utils.cmd[i] = ft_substr(pipex->cmd[i], 0, j);
+		pipex->src.cmd[i] = ft_substr(pipex->cmd[i], 0, j);
 	}
-	pipex->utils.cmd[i] = NULL;
+	pipex->src.cmd[i] = NULL;
 	return ;
 }
