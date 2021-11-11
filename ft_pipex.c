@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 22:54:16 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/11 02:02:41 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 			execve(path, pipex->src.cmd, pipex->src.envp);
 		free(path);
 	}
-	unlink(pipex->outfile);
 	ft_free_cmd(pipex);
 	ft_free_path(pipex);
 	ft_free_src(pipex);
