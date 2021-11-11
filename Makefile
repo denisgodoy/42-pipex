@@ -2,11 +2,16 @@ NAME := pipex
 
 CC := clang
 
-CFLAGS := -Wall -Wextra -Werror -I includes/ -g
+OBJ_DIR := obj
+
+CFLAGS := -Wall -Wextra -Werror -g
+
+INCLUDES := -I includes/
 
 HEADERS := includes/pipex.h
 
-SRC := 	ft_check_args.c \
+SRC := 	main.c \
+		ft_check_args.c \
 		free.c \
 		ft_pipex.c \
 		ft_error_handler.c \
@@ -20,19 +25,22 @@ SRC := 	ft_check_args.c \
 		ft_strjoin_free.c \
 		ft_strjoin.c)
 
-OBJ := $(SRC:%.c=%.o)
+OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
 all: $(NAME)
 
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(OBJ_DIR)/utils
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
 $(NAME): $(OBJ) $(HEADERS)
-	$(CC) $(CFLAGS) main.c $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) -o $(NAME)
 
 clean:
-	rm -rf $(OBJ)
-	rm -rf $(BONUS_OBJ)
+	$(RM) -r $(OBJ_DIR)
 
 fclean: clean
-	rm -rf $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 
@@ -40,3 +48,5 @@ commit:
 	git add .
 	git commit -m "update pipex"
 	git push origin main
+
+.PHONY: all clean fclean re
