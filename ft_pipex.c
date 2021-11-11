@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 22:23:19 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 22:54:16 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 	unlink(pipex->outfile);
 	ft_free_cmd(pipex);
 	ft_free_path(pipex);
+	ft_free_src(pipex);
 	ft_error_handler(EINVAL);
 }

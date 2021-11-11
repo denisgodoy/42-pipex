@@ -7,8 +7,7 @@ CFLAGS := -Wall -Wextra -Werror -I includes/ -g
 HEADERS := includes/pipex.h
 
 SRC := 	ft_check_args.c \
-		ft_free_cmd.c \
-		ft_free_path.c \
+		free.c \
 		ft_pipex.c \
 		ft_error_handler.c \
 		$(addprefix utils/, \
