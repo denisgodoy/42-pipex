@@ -6,11 +6,11 @@ CFLAGS := -Wall -Wextra -Werror -I includes/ -g
 
 HEADERS := includes/pipex.h
 
-SRC := main.c \
-		ft_check_args.c \
-		ft_free_arr.c \
+SRC := 	ft_check_args.c \
+		ft_free_cmd.c \
+		ft_free_path.c \
 		ft_pipex.c \
-		ft_cmd_format.c \
+		ft_error_handler.c \
 		$(addprefix utils/, \
 		ft_strdup.c \
 		ft_strlcpy.c \
@@ -26,7 +26,7 @@ OBJ := $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) main.c $(OBJ) -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:42:45 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 16:56:11 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 21:56:56 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ void	ft_check_args(t_pipex *pipex, int argc, char **argv)
 	int	j;
 
 	if (argc != 5)
-	{
-		perror(strerror(EINVAL));
-		exit(EXIT_FAILURE);
-	}
+		ft_error_handler(EINVAL);
 	pipex->infile = argv[1];
 	pipex->outfile = argv[argc - 1];
 	if (ft_check_envp(pipex) < 0)
@@ -32,8 +29,7 @@ void	ft_check_args(t_pipex *pipex, int argc, char **argv)
 	if (!pipex->cmd)
 	{
 		ft_free_path(pipex);
-		perror(strerror(ENOMEM));
-		exit(EXIT_FAILURE);
+		ft_error_handler(ENOMEM);
 	}
 	i = -1;
 	j = 2;

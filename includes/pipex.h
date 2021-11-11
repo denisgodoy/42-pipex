@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 16:52:32 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 22:24:22 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,9 @@ typedef struct s_pipex
 }	t_pipex;
 
 void	ft_check_args(t_pipex *pipex, int argc, char **argv);
-void	ft_cmd_format(t_pipex *pipex);
+void	ft_error_handler(int errno);
 void	ft_free_cmd(t_pipex *pipex);
 void	ft_free_path(t_pipex *pipex);
-void	ft_free_utils(t_pipex *pipex);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	ft_pipex(t_pipex *pipex);
 char	**ft_split(char const *s, char c);

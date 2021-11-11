@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 16:55:56 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/10 22:23:19 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,12 @@ void	ft_pipex(t_pipex *pipex)
 		exit(EXIT_FAILURE);
 	pid1 = fork();
 	if (pid1 < 0)
-	{
-		perror(strerror(ECHILD));
-		exit(EXIT_FAILURE);
-	}
+		ft_error_handler(ECHILD);
 	else if (!pid1)
 		ft_pipe_process(pipex, child, piped);
 	pid2 = fork();
 	if (pid2 < 0)
-	{
-		perror(strerror(ECHILD));
-		exit(EXIT_FAILURE);
-	}
+		ft_error_handler(ECHILD);
 	else if (!pid2)
 		ft_pipe_process(pipex, parent, piped);
 	close(piped[0]);
@@ -69,18 +63,18 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 {
 	int		i;
 	char	*path;
-	char	**cmd;
 
-	cmd = ft_split(pipex->cmd[arg], ' ');
+	pipex->src.cmd = ft_split(pipex->cmd[arg], ' ');
 	i = -1;
 	while (pipex->src.path[++i])
 	{
-		path = ft_strjoin(pipex->src.path[i], pipex->src.cmd[arg]);
+		path = ft_strjoin(pipex->src.path[i], *pipex->src.cmd);
 		if (!access(path, X_OK))
-			execve(path, cmd, pipex->src.envp);
+			execve(path, pipex->src.cmd, pipex->src.envp);
 		free(path);
 	}
 	unlink(pipex->outfile);
-	perror(strerror(EINVAL));
-	exit(EXIT_FAILURE);
+	ft_free_cmd(pipex);
+	ft_free_path(pipex);
+	ft_error_handler(EINVAL);
 }
