@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/11 23:17:58 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/11 23:22:37 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ static char	*ft_check_shell(t_pipex *pipex)
 	while (pipex->src.envp[++i])
 	{
 		if (!ft_memcmp(pipex->src.envp[i], "SHELL", 5))
-			return (ft_strjoin_free(ft_strdup(ft_strrchr(
-							pipex->src.envp[i], '/') + 1), ": "));
+			return (ft_strjoin(ft_strrchr(pipex->src.envp[i], '/') + 1, ": "));
 	}
 	return (0);
 }
