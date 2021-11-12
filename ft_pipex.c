@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/11 22:13:40 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/11 22:19:08 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,12 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 static char	*ft_check_shell(t_pipex *pipex)
 {
 	int		i;
-	size_t	envlen;
 	char	*shell;
 
 	i = -1;
 	shell = NULL;
 	while (pipex->src.envp[++i])
 	{
-		envlen = ft_strlen(pipex->src.envp[i]);
 		if (!ft_memcmp(pipex->src.envp[i], "SHELL", 5))
 			shell = ft_strjoin_free(ft_strdup(ft_strrchr(
 							pipex->src.envp[i], '/') + 1), ": ");
