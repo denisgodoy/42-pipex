@@ -23,8 +23,7 @@ SRC := 	main.c \
 		ft_split.c \
 		ft_substr.c \
 		ft_strjoin_free.c \
-		ft_strjoin.c \
-		ft_strrchr.c)
+		ft_strjoin.c)
 
 OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 

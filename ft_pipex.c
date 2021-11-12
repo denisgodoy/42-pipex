@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/11 21:35:33 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/11 22:13:40 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	ft_exec_cmd(t_pipex *pipex, int arg);
 static void	ft_pipe_process(t_pipex *pipex, int process, int *piped);
 static char	*ft_check_shell(t_pipex *pipex);
+static char	*ft_strrchr(const char *s, int c);
 
 void	ft_pipex(t_pipex *pipex)
 {
@@ -75,16 +76,13 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 			execve(path, pipex->src.cmd, pipex->src.envp);
 		free(path);
 	}
-	shell = ft_check_shell(pipex);
+	shell = ft_strjoin_free(ft_check_shell(pipex), *pipex->src.cmd);
+	shell = ft_strjoin_free(shell, ": command not found\n");
 	write(2, shell, ft_strlen(shell));
-	write(2, ": command not found: ", 21);
-	write(2, *pipex->src.cmd, ft_strlen(*pipex->src.cmd));
-	write(2, "\n", 1);
-	ft_free_cmd(pipex);
-	ft_free_path(pipex);zsh
-	
-	ft_free_src(pipex);
 	free(shell);
+	ft_free_cmd(pipex);
+	ft_free_path(pipex);
+	ft_free_src(pipex);
 	exit(EXIT_FAILURE);
 }
 
@@ -100,7 +98,22 @@ static char	*ft_check_shell(t_pipex *pipex)
 	{
 		envlen = ft_strlen(pipex->src.envp[i]);
 		if (!ft_memcmp(pipex->src.envp[i], "SHELL", 5))
-			shell = ft_strdup(ft_strrchr(pipex->src.envp[i], '/') + 1);
+			shell = ft_strjoin_free(ft_strdup(ft_strrchr(
+							pipex->src.envp[i], '/') + 1), ": ");
 	}
 	return (shell);
+}
+
+static char	*ft_strrchr(const char *s, int c)
+{
+	int	i;
+
+	i = (int)ft_strlen(s);
+	while (i >= 0)
+	{
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i--;
+	}
+	return (0);
 }
