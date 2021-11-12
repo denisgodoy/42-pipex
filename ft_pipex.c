@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/11 23:22:37 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/12 03:22:10 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ static void	ft_pipe_process(t_pipex *pipex, int process, int *piped);
 static char	*ft_check_shell(t_pipex *pipex);
 static char	*ft_strrchr(const char *s, int c);
 
-void	ft_pipex(t_pipex *pipex)
+int	ft_pipex(t_pipex *pipex)
 {
 	int		piped[2];
 	pid_t	pid1;
 	pid_t	pid2;
+	int		status;
 
 	if (pipe(piped) < 0)
 		exit(EXIT_FAILURE);
@@ -37,8 +38,9 @@ void	ft_pipex(t_pipex *pipex)
 		ft_pipe_process(pipex, parent, piped);
 	close(piped[0]);
 	close(piped[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+	waitpid(pid1, &status, 0);
+	waitpid(pid2, &status, 0);
+	return (WEXITSTATUS(status));
 }
 
 static void	ft_pipe_process(t_pipex *pipex, int process, int *piped)
@@ -68,6 +70,9 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 	char	*shell;
 
 	pipex->src.cmd = ft_split(pipex->cmd[arg], ' ');
+	if (ft_strrchr(*pipex->src.cmd, '/'))
+		if (!access(*pipex->src.cmd, X_OK))
+			execve(*pipex->src.cmd, pipex->src.cmd, pipex->src.envp);
 	i = -1;
 	while (pipex->src.path[++i])
 	{
@@ -83,7 +88,7 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 	ft_free_cmd(pipex);
 	ft_free_path(pipex);
 	ft_free_src(pipex);
-	exit(EXIT_FAILURE);
+	exit(EXIT_COMMAND);
 }
 
 static char	*ft_check_shell(t_pipex *pipex)

@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:32:49 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/10 22:23:59 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/12 03:14:41 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
+	int		status;
 
 	pipex.src.envp = envp;
 	ft_check_args(&pipex, argc, argv);
@@ -24,11 +25,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_free_cmd(&pipex);
 		ft_free_path(&pipex);
-		unlink(pipex.outfile);
 		ft_error_handler(EBADF);
 	}
-	ft_pipex(&pipex);
+	status = ft_pipex(&pipex);
 	ft_free_cmd(&pipex);
 	ft_free_path(&pipex);
-	return (0);
+	exit(status);
 }

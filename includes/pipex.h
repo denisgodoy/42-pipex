@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/11 22:12:46 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/12 02:16:15 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 # include <sys/wait.h>
 # include <string.h>
 
-# define ENOMEM	12
-# define EINVAL	22
-# define EBADF	9
-# define ECHILD	10
+# define ENOMEM			12
+# define EINVAL			22
+# define EBADF			9
+# define ECHILD			10
+# define EXIT_COMMAND	127
 
 enum e_process
 {
@@ -57,7 +58,7 @@ void	ft_free_cmd(t_pipex *pipex);
 void	ft_free_path(t_pipex *pipex);
 void	ft_free_src(t_pipex *pipex);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	ft_pipex(t_pipex *pipex);
+int		ft_pipex(t_pipex *pipex);
 char	**ft_split(char const *s, char c);
 size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
