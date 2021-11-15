@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/12 02:16:15 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/12 15:18:08 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define EINVAL			22
 # define EBADF			9
 # define ECHILD			10
-# define EXIT_COMMAND	127
+# define EXIT_INVCMD	127
 
 enum e_process
 {
