@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/12 15:18:18 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/16 19:45:13 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static void	ft_exec_cmd(t_pipex *pipex, int arg);
 static void	ft_pipe_process(t_pipex *pipex, int process, int *piped);
-static char	*ft_check_shell(t_pipex *pipex);
-static char	*ft_strrchr(const char *s, int c);
 
 int	ft_pipex(t_pipex *pipex)
 {
@@ -89,31 +87,4 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 	ft_free_path(pipex);
 	ft_free_src(pipex);
 	exit(EXIT_INVCMD);
-}
-
-static char	*ft_check_shell(t_pipex *pipex)
-{
-	int	i;
-
-	i = -1;
-	while (pipex->src.envp[++i])
-	{
-		if (!ft_memcmp(pipex->src.envp[i], "SHELL", 5))
-			return (ft_strjoin(ft_strrchr(pipex->src.envp[i], '/') + 1, ": "));
-	}
-	return (0);
-}
-
-static char	*ft_strrchr(const char *s, int c)
-{
-	int	i;
-
-	i = (int)ft_strlen(s);
-	while (i >= 0)
-	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i--;
-	}
-	return (0);
 }

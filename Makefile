@@ -12,6 +12,7 @@ HEADERS := includes/pipex.h
 
 SRC := 	main.c \
 		ft_check_args.c \
+		ft_check_shell.c \
 		free.c \
 		ft_pipex.c \
 		ft_error_handler.c \
@@ -23,7 +24,8 @@ SRC := 	main.c \
 		ft_split.c \
 		ft_substr.c \
 		ft_strjoin_free.c \
-		ft_strjoin.c)
+		ft_strjoin.c \
+		ft_strrchr.c)
 
 OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 

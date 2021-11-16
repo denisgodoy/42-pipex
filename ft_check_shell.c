@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_check_shell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 12:32:49 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/16 20:25:10 by degabrie         ###   ########.fr       */
+/*   Created: 2021/11/15 23:08:30 by degabrie          #+#    #+#             */
+/*   Updated: 2021/11/15 23:08:56 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_check_shell(t_pipex *pipex)
 {
-	t_pipex	pipex;
-	int		status;
+	int	i;
 
-	pipex.src.envp = envp;
-	ft_check_args(&pipex, argc, argv);
-	pipex.fd1 = open(pipex.infile, O_RDONLY);
-	pipex.fd2 = open(pipex.outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (pipex.fd2 < 0)
+	i = -1;
+	while (pipex->src.envp[++i])
 	{
-		ft_free_cmd(&pipex);
-		ft_free_path(&pipex);
-		ft_error_handler(EBADF);
+		if (!ft_memcmp(pipex->src.envp[i], "SHELL", 5))
+			return (ft_strjoin(ft_strrchr(pipex->src.envp[i], '/') + 1, ": "));
 	}
-	status = ft_pipex(&pipex);
-	ft_free_cmd(&pipex);
-	ft_free_path(&pipex);
-	exit(status);
+	return (0);
 }
