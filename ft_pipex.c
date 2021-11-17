@@ -6,15 +6,15 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/17 01:09:18 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/17 10:26:30 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
-static void	ft_exec_cmd(t_pipex *pipex, int arg);
 static void	ft_pipe_child1(t_pipex *pipex, int *piped);
 static void	ft_pipe_child2(t_pipex *pipex, int *piped);
+static void	ft_exec_cmd(t_pipex *pipex, int arg);
 
 int	ft_pipex(t_pipex *pipex)
 {
@@ -23,8 +23,7 @@ int	ft_pipex(t_pipex *pipex)
 	pid_t	pid2;
 	int		status;
 
-	if (pipe(piped) < 0)
-		exit(EXIT_FAILURE);
+	pipe(piped);
 	pid1 = fork();
 	if (pid1 < 0)
 		ft_error_handler(ECHILD);
