@@ -11,21 +11,21 @@ INCLUDES := -I includes/
 HEADERS := includes/pipex.h
 
 SRC := 	main.c \
+		free.c \
 		ft_check_args.c \
 		ft_check_shell.c \
-		free.c \
-		ft_pipex.c \
 		ft_error_handler.c \
+		ft_pipex.c \
 		$(addprefix utils/, \
-		ft_strdup.c \
-		ft_strlcpy.c \
-		ft_strlen.c \
 		ft_memcmp.c \
 		ft_split.c \
-		ft_substr.c \
+		ft_strdup.c \
 		ft_strjoin_free.c \
 		ft_strjoin.c \
-		ft_strrchr.c)
+		ft_strlcpy.c \
+		ft_strlen.c \
+		ft_strrchr.c \
+		ft_substr.c)
 
 OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
@@ -45,10 +45,5 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
-
-commit:
-	git add .
-	git commit -m "update pipex"
-	git push origin main
 
 .PHONY: all clean fclean re

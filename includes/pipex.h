@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/17 19:01:49 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/17 20:04:55 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,13 @@
 
 # define ENOMEM			12
 # define EINVAL			22
-# define EBADF			9
 # define ECHILD			10
 # define EXIT_INVCMD	127
 
 enum e_process
 {
 	cmd1,
-	cmd2,
-	child,
-	parent
+	cmd2
 };
 
 typedef struct s_src
@@ -60,11 +57,11 @@ void	ft_free_src(t_pipex *pipex);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_pipex(t_pipex *pipex);
 char	**ft_split(char const *s, char c);
-size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize);
-size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin_free(char *s1, char const *s2);
+size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize);
+size_t	ft_strlen(const char *s);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
