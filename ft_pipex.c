@@ -6,14 +6,15 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/16 19:45:13 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/17 01:09:18 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"pipex.h"
 
 static void	ft_exec_cmd(t_pipex *pipex, int arg);
-static void	ft_pipe_process(t_pipex *pipex, int process, int *piped);
+static void	ft_pipe_child1(t_pipex *pipex, int *piped);
+static void	ft_pipe_child2(t_pipex *pipex, int *piped);
 
 int	ft_pipex(t_pipex *pipex)
 {
@@ -28,12 +29,12 @@ int	ft_pipex(t_pipex *pipex)
 	if (pid1 < 0)
 		ft_error_handler(ECHILD);
 	else if (!pid1)
-		ft_pipe_process(pipex, child, piped);
+		ft_pipe_child1(pipex, piped);
 	pid2 = fork();
 	if (pid2 < 0)
 		ft_error_handler(ECHILD);
 	else if (!pid2)
-		ft_pipe_process(pipex, parent, piped);
+		ft_pipe_child2(pipex, piped);
 	close(piped[0]);
 	close(piped[1]);
 	waitpid(pid1, &status, 0);
@@ -41,24 +42,34 @@ int	ft_pipex(t_pipex *pipex)
 	return (WEXITSTATUS(status));
 }
 
-static void	ft_pipe_process(t_pipex *pipex, int process, int *piped)
+static void	ft_pipe_child1(t_pipex *pipex, int *piped)
 {
-	if (process == child)
+	char	*shell;
+
+	if (dup2(pipex->fd1, STDIN_FILENO) < 0)
 	{
-		dup2(pipex->fd1, STDIN_FILENO);
-		dup2(piped[1], STDOUT_FILENO);
-		close(piped[0]);
-		close(pipex->fd1);
-		ft_exec_cmd(pipex, cmd1);
+		shell = ft_check_shell(pipex, ": no such file or directory\n",
+				pipex->infile);
+		write(2, shell, ft_strlen(shell));
+		free(shell);
+		close(STDIN_FILENO);
+		ft_free_cmd(pipex);
+		ft_free_path(pipex);
+		exit(EXIT_FAILURE);
 	}
-	else if (process == parent)
-	{
-		dup2(piped[0], STDIN_FILENO);
-		dup2(pipex->fd2, STDOUT_FILENO);
-		close(piped[1]);
-		close(pipex->fd2);
-		ft_exec_cmd(pipex, cmd2);
-	}
+	dup2(piped[1], STDOUT_FILENO);
+	close(piped[0]);
+	close(pipex->fd1);
+	ft_exec_cmd(pipex, cmd1);
+}
+
+static void	ft_pipe_child2(t_pipex *pipex, int *piped)
+{
+	dup2(piped[0], STDIN_FILENO);
+	dup2(pipex->fd2, STDOUT_FILENO);
+	close(piped[1]);
+	close(pipex->fd2);
+	ft_exec_cmd(pipex, cmd2);
 }
 
 static void	ft_exec_cmd(t_pipex *pipex, int arg)
@@ -79,8 +90,7 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 			execve(path, pipex->src.cmd, pipex->src.envp);
 		free(path);
 	}
-	shell = ft_strjoin_free(ft_check_shell(pipex), *pipex->src.cmd);
-	shell = ft_strjoin_free(shell, ": command not found\n");
+	shell = ft_check_shell(pipex, ": command not found\n", *pipex->src.cmd);
 	write(2, shell, ft_strlen(shell));
 	free(shell);
 	ft_free_cmd(pipex);
