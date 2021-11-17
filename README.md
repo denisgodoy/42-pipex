@@ -13,7 +13,7 @@ Simulating the pipe and redirection shell commands in C. An introductory project
 
 | Program 	|  Description  |    Libraries   	|    External functions   	|
 |:--------:	|:------------:	|:------------:	|:------------:	|
-|  pipex 	|Produces output to outfile after the execution of two shell commands, simulating `pipe` and `redirection`.|   stdio.h, fcntl.h, stdlib.h, unistd.h, sys/types.h, sys/wait.h, string.h  	|  access, open, write, unlink, close, malloc, waitpid, free, pipe, dup2, execve, fork, strerror, exit|
+|  pipex 	|Produces output to outfile after the execution of two shell commands, simulating `pipe` and `redirection`.|   fcntl.h, stdlib.h, unistd.h, sys/types.h, sys/wait.h, string.h  	|  access, open, write, unlink, close, malloc, waitpid, free, pipe, dup2, execve, fork, strerror, exit|
 
 The pipex program simulates real shell commands as follows:
 ```shell
