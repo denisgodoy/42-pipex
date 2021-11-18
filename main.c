@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:32:49 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/17 22:18:44 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/17 23:26:57 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	main(int argc, char **argv, char **envp)
 	pipex.src.envp = envp;
 	ft_check_args(&pipex, argc, argv);
 	pipex.fd1 = open(pipex.infile, O_RDONLY);
+	if (!access(pipex.infile, F_OK) && pipex.fd1 < 0)
+		ft_error_handler(&pipex, ": permission denied\n", pipex.infile);
 	pipex.fd2 = open(pipex.outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (pipex.fd2 < 0)
 	{
