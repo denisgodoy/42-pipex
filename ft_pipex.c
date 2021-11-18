@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/17 10:26:30 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/17 22:14:15 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int	ft_pipex(t_pipex *pipex)
 	pipe(piped);
 	pid1 = fork();
 	if (pid1 < 0)
-		ft_error_handler(ECHILD);
+		ft_errno(ECHILD);
 	else if (!pid1)
 		ft_pipe_child1(pipex, piped);
 	pid2 = fork();
 	if (pid2 < 0)
-		ft_error_handler(ECHILD);
+		ft_errno(ECHILD);
 	else if (!pid2)
 		ft_pipe_child2(pipex, piped);
 	close(piped[0]);
@@ -43,14 +43,9 @@ int	ft_pipex(t_pipex *pipex)
 
 static void	ft_pipe_child1(t_pipex *pipex, int *piped)
 {
-	char	*shell;
-
 	if (dup2(pipex->fd1, STDIN_FILENO) < 0)
 	{
-		shell = ft_check_shell(pipex, ": no such file or directory\n",
-				pipex->infile);
-		write(2, shell, ft_strlen(shell));
-		free(shell);
+		ft_error_handler(pipex, ": no such file or directory\n", pipex->infile);
 		close(STDIN_FILENO);
 		ft_free_cmd(pipex);
 		ft_free_path(pipex);
@@ -75,7 +70,6 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 {
 	int		i;
 	char	*path;
-	char	*shell;
 
 	pipex->src.cmd = ft_split(pipex->cmd[arg], ' ');
 	if (ft_strrchr(*pipex->src.cmd, '/'))
@@ -89,9 +83,7 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 			execve(path, pipex->src.cmd, pipex->src.envp);
 		free(path);
 	}
-	shell = ft_check_shell(pipex, ": command not found\n", *pipex->src.cmd);
-	write(2, shell, ft_strlen(shell));
-	free(shell);
+	ft_error_handler(pipex, ": command not found\n", *pipex->src.cmd);
 	ft_free_cmd(pipex);
 	ft_free_path(pipex);
 	ft_free_src(pipex);
