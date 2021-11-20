@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/17 22:10:35 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/19 21:27:58 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_pipex
 	t_src	src;
 }	t_pipex;
 
-void	ft_check_args(t_pipex *pipex, int argc, char **argv);
 char	*ft_check_shell(t_pipex *pipex, char *msg, char *err);
 void	ft_errno(int errno);
 void	ft_error_handler(t_pipex *pipex, char *msg, char *err);
