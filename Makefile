@@ -13,6 +13,7 @@ HEADERS := includes/pipex.h
 SRC := 	main.c \
 		errors.c \
 		free.c \
+		ft_check_args.c \
 		ft_check_shell.c \
 		ft_pipex.c \
 		$(addprefix utils/, \
