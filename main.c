@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:32:49 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/22 22:38:28 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/23 16:51:06 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int	main(int argc, char **argv, char **envp)
 	if (pipex.fd2 < 0)
 	{
 		ft_error_handler(&pipex, ": permission denied\n", pipex.outfile);
-		ft_free_cmd(&pipex);
-		ft_free_path(&pipex);
+		ft_free_arr(pipex.cmd);
+		ft_free_arr(pipex.src.path);
 		exit(EXIT_FAILURE);
 	}
 	status = ft_pipex(&pipex);
-	ft_free_cmd(&pipex);
-	ft_free_path(&pipex);
+	ft_free_arr(pipex.cmd);
+	ft_free_arr(pipex.src.path);
 	exit(status);
 }

@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/17 23:36:19 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/23 16:53:14 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static void	ft_pipe_child1(t_pipex *pipex, int *piped)
 			ft_error_handler(pipex, ": no such file or directory\n",
 				pipex->infile);
 		close(STDIN_FILENO);
-		ft_free_cmd(pipex);
-		ft_free_path(pipex);
+		ft_free_arr(pipex->cmd);
+		ft_free_arr(pipex->src.path);
 		exit(EXIT_FAILURE);
 	}
 	dup2(piped[1], STDOUT_FILENO);
@@ -86,8 +86,8 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 		free(path);
 	}
 	ft_error_handler(pipex, ": command not found\n", *pipex->src.cmd);
-	ft_free_cmd(pipex);
-	ft_free_path(pipex);
-	ft_free_src(pipex);
+	ft_free_arr(pipex->cmd);
+	ft_free_arr(pipex->src.path);
+	ft_free_arr(pipex->src.cmd);
 	exit(EXIT_INVCMD);
 }

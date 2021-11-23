@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 22:38:08 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/22 22:38:36 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/11/23 16:55:05 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_check_args(t_pipex *pipex, int argc, char **argv)
 	pipex->cmd = (char **)malloc((argc - 2) * sizeof(char *));
 	if (!pipex->cmd)
 	{
-		ft_free_path(pipex);
+		ft_free_arr(pipex->src.path);
 		ft_errno(ENOMEM);
 	}
 	i = -1;
@@ -54,6 +54,11 @@ static int	ft_check_envp(t_pipex *pipex)
 		{
 			paths = ft_substr(pipex->src.envp[i], 5, envlen);
 			pipex->src.path = ft_split(paths, ':');
+			if (!pipex->src.path)
+			{
+				free(paths);
+				ft_errno(ENOMEM);
+			}
 			free(paths);
 			i = -1;
 			while (pipex->src.path[++i])
