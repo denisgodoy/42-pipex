@@ -14,10 +14,9 @@ Simulating the pipe and redirection shell commands in C. An introductory project
 | Program 	|  Description  |    Libraries   	|    External functions   	|
 |:--------:	|:------------:	|:------------:	|:------------:	|
 |  pipex 	|Produces output to outfile after the execution of two shell commands, simulating `pipe` and `redirection`.|   fcntl.h, stdlib.h, unistd.h, sys/types.h, sys/wait.h, string.h  	|  access, open, write, unlink, close, malloc, waitpid, free, pipe, dup2, execve, fork, strerror, exit|
-
-The pipex program simulates real shell commands as follows:
 ```shell
-< infile.txt grep 42 | wc -w > outfile.txt
+< infile cmd1 | cmd2 > outfile #real usage
+./pipex infile "cmd1" "cmd2" outfile #program usage
 ```
 
 Clone and compile:
@@ -27,7 +26,8 @@ cd pipex
 make all
 ```
 
-Create an infile with the content you want, choose the commands and execute like this:
+Create an infile with the content you want, choose two commands and execute the program:
 ```shell
-./pipex infile.txt "grep 42" "wc -w" outfile.txt
+./pipex infile "ls -la" "wc -l" outfile
 ```
+
