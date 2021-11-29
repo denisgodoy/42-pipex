@@ -1,6 +1,6 @@
 NAME := pipex
 
-CC := clang
+CC := gcc
 
 OBJ_DIR := obj
 
