@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 22:38:08 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/23 16:55:05 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/12/01 21:46:51 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	ft_check_args(t_pipex *pipex, int argc, char **argv)
 	int	j;
 
 	if (argc != 5)
+	{
+		write(2, "Expected: ./pipex <infile> <cmd1> <cmd2> <outfile>\n", 51);
 		ft_errno(EINVAL);
+	}
 	pipex->infile = argv[1];
 	pipex->outfile = argv[argc - 1];
 	if (ft_check_envp(pipex) < 0)
