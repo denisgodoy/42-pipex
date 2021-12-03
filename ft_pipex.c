@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/23 16:53:14 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/12/02 23:23:52 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	ft_pipe_child1(t_pipex *pipex, int *piped);
 static void	ft_pipe_child2(t_pipex *pipex, int *piped);
 static void	ft_exec_cmd(t_pipex *pipex, int arg);
+static void	ft_exit_free(t_pipex *pipex);
 
 int	ft_pipex(t_pipex *pipex)
 {
@@ -74,20 +75,32 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 	char	*path;
 
 	pipex->src.cmd = ft_split(pipex->cmd[arg], ' ');
-	if (ft_strrchr(*pipex->src.cmd, '/'))
+	if (*pipex->src.cmd != NULL && ft_strrchr(*pipex->src.cmd, '/'))
 		if (!access(*pipex->src.cmd, X_OK))
 			execve(*pipex->src.cmd, pipex->src.cmd, pipex->src.envp);
-	i = -1;
-	while (pipex->src.path[++i])
+	if (*pipex->src.cmd != NULL)
 	{
-		path = ft_strjoin(pipex->src.path[i], *pipex->src.cmd);
-		if (!access(path, X_OK))
-			execve(path, pipex->src.cmd, pipex->src.envp);
-		free(path);
+		i = -1;
+		while (pipex->src.path[++i])
+		{
+			path = ft_strjoin(pipex->src.path[i], *pipex->src.cmd);
+			if (!access(path, X_OK))
+				execve(path, pipex->src.cmd, pipex->src.envp);
+			free(path);
+		}
+		ft_error_handler(pipex, ": command not found\n", *pipex->src.cmd);
+		ft_free_arr(pipex->cmd);
+		ft_free_arr(pipex->src.path);
+		ft_free_arr(pipex->src.cmd);
+		exit(EXIT_INVCMD);
 	}
-	ft_error_handler(pipex, ": command not found\n", *pipex->src.cmd);
+	ft_exit_free(pipex);
+}
+
+static void	ft_exit_free(t_pipex *pipex)
+{
 	ft_free_arr(pipex->cmd);
 	ft_free_arr(pipex->src.path);
-	ft_free_arr(pipex->src.cmd);
-	exit(EXIT_INVCMD);
+	free(pipex->src.cmd);
+	exit(EXIT_FAILURE);
 }
