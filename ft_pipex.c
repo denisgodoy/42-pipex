@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:05:39 by degabrie          #+#    #+#             */
-/*   Updated: 2021/12/02 23:23:52 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/12/04 20:35:28 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	ft_pipe_child1(t_pipex *pipex, int *piped);
 static void	ft_pipe_child2(t_pipex *pipex, int *piped);
 static void	ft_exec_cmd(t_pipex *pipex, int arg);
-static void	ft_exit_free(t_pipex *pipex);
+static void	ft_exit_free(t_pipex *pipex, int arg);
 
 int	ft_pipex(t_pipex *pipex)
 {
@@ -52,7 +52,7 @@ static void	ft_pipe_child1(t_pipex *pipex, int *piped)
 		close(STDIN_FILENO);
 		ft_free_arr(pipex->cmd);
 		ft_free_arr(pipex->src.path);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	dup2(piped[1], STDOUT_FILENO);
 	close(piped[0]);
@@ -74,7 +74,10 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 	int		i;
 	char	*path;
 
+	i = ft_pre_split(pipex, pipex->cmd[arg], arg);
 	pipex->src.cmd = ft_split(pipex->cmd[arg], ' ');
+	if (i)
+		ft_update_char(pipex);
 	if (*pipex->src.cmd != NULL && ft_strrchr(*pipex->src.cmd, '/'))
 		if (!access(*pipex->src.cmd, X_OK))
 			execve(*pipex->src.cmd, pipex->src.cmd, pipex->src.envp);
@@ -89,18 +92,23 @@ static void	ft_exec_cmd(t_pipex *pipex, int arg)
 			free(path);
 		}
 		ft_error_handler(pipex, ": command not found\n", *pipex->src.cmd);
-		ft_free_arr(pipex->cmd);
-		ft_free_arr(pipex->src.path);
-		ft_free_arr(pipex->src.cmd);
-		exit(EXIT_INVCMD);
+		ft_exit_free(pipex, 1);
 	}
-	ft_exit_free(pipex);
+	ft_exit_free(pipex, 0);
 }
 
-static void	ft_exit_free(t_pipex *pipex)
+static void	ft_exit_free(t_pipex *pipex, int arg)
 {
 	ft_free_arr(pipex->cmd);
 	ft_free_arr(pipex->src.path);
-	free(pipex->src.cmd);
-	exit(EXIT_FAILURE);
+	if (!arg)
+	{
+		free(pipex->src.cmd);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		ft_free_arr(pipex->src.cmd);
+		exit(EXIT_INVCMD);
+	}
 }

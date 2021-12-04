@@ -4,7 +4,7 @@ CC := gcc
 
 OBJ_DIR := obj
 
-CFLAGS := -Wall -Wextra -Werror -g
+CFLAGS := -Wall -Wextra -Werror -fsanitize=address
 
 INCLUDES := -I includes/
 
@@ -16,6 +16,7 @@ SRC := 	main.c \
 		ft_check_args.c \
 		ft_check_shell.c \
 		ft_pipex.c \
+		pre_split.c \
 		$(addprefix utils/, \
 		ft_memcmp.c \
 		ft_split.c \

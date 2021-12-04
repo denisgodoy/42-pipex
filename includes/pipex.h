@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/11/23 16:52:06 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/12/04 20:25:20 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_error_handler(t_pipex *pipex, char *msg, char *err);
 void	ft_free_arr(char **arr);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_pipex(t_pipex *pipex);
+int		ft_pre_split(t_pipex *pipex, char *cmd, int arg);
 char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -63,5 +64,6 @@ size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	ft_update_char(t_pipex *pipex);
 
 #endif
