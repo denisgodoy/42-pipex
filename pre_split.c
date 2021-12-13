@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 20:23:33 by degabrie          #+#    #+#             */
-/*   Updated: 2021/12/13 16:59:42 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/12/13 19:16:21 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ int	ft_pre_split(t_pipex *pipex, char *cmd, int arg)
 	i = -1;
 	while (cmd[++i])
 	{
-		if ((cmd[i] == '\'' && cmd[i + 2] == '\''))
+		if ((cmd[i] == '\'' && cmd[i + 2] == '\'') && cmd[i + 1] == ' ')
 		{
-			pipex->src.temp = cmd[i + 1];
 			pipex->cmd[arg][i + 1] = '`';
 			return (1);
 		}
@@ -43,7 +42,7 @@ void	ft_update_char(t_pipex *pipex)
 			if (pipex->src.cmd[i][j] == '`')
 			{
 				free(pipex->src.cmd[i]);
-				pipex->src.cmd[i] = ft_strdup(&pipex->src.temp);
+				pipex->src.cmd[i] = ft_strdup(" ");
 				return ;
 			}
 		}

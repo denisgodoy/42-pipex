@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:28:11 by degabrie          #+#    #+#             */
-/*   Updated: 2021/12/13 16:59:40 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/12/13 19:16:49 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_src
 	char	**path;
 	char	**envp;
 	int		cmdlen;
-	char	temp;
 }	t_src;
 
 typedef struct s_pipex
