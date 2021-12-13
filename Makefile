@@ -4,7 +4,7 @@ CC := gcc
 
 OBJ_DIR := obj
 
-CFLAGS := -Wall -Wextra -Werror -fsanitize=address
+CFLAGS := -Wall -Wextra -Werror
 
 INCLUDES := -I includes/
 
