@@ -6,7 +6,7 @@
 /*   By: degabrie <degabrie@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 20:23:33 by degabrie          #+#    #+#             */
-/*   Updated: 2021/12/13 19:31:03 by degabrie         ###   ########.fr       */
+/*   Updated: 2021/12/14 16:27:52 by degabrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ int	ft_pre_split(t_pipex *pipex, char *cmd, int arg)
 		if (cmd[i] == '\'')
 		{
 			j = i + 1;
-			while (cmd[j] == ' ')
+			while (cmd[j] != '\'')
 			{
-				pipex->cmd[arg][j] = '`';
+				if (cmd[j] == ' ')
+					pipex->cmd[arg][j] = '`';
 				j++;
 			}
 			return (1);
