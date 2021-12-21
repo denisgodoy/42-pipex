@@ -7,7 +7,7 @@ Simulating the pipe and redirection shell commands in C. An introductory project
 - [Mandatory part](https://github.com/denisgodoy/42-pipex#mandatory-part)
 
 ## Evaluation
-[IN PROGRESS]
+<img width="185" alt="image" src="https://user-images.githubusercontent.com/56933400/146850520-00b112fd-4235-40a4-8b5d-505e52ece207.png"> ![badge](https://user-images.githubusercontent.com/56933400/146850411-1b08cae7-4ac0-4161-8401-29928fe87027.png)
 
 ## Mandatory part
 
